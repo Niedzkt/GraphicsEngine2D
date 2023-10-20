@@ -1,9 +1,16 @@
-﻿#include <iostream>
-#include "Engine.h"
+﻿#include "Engine.h"
+
 int main()
 {
-    Engine gameEngine(800, 600, "MY 2D GameEngine");
-    gameEngine.run();
+    Engine engine;
+
+	if (!engine.initialize())
+	{
+		std::cout << "ERROR::CANT INITIALIZE GAME ENGINE!" << std::endl;
+		return -1;
+	}
+
+	engine.mainLoop();
 
     return 0;
 }

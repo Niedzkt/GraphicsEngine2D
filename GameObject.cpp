@@ -7,6 +7,7 @@ GameObject::GameObject(const std::string& texturePath)
 	{
 		std::cout << "ERROR::TEXTURE OF GAMEOBJECT DID NOT LOAD!" << std::endl;
 	}
+	sprite.setTexture(texture);
 }
 
 GameObject::~GameObject()
@@ -15,13 +16,15 @@ GameObject::~GameObject()
 
 void GameObject::setPosition(const sf::Vector2f& position)
 {
+	sprite.setPosition(position);
 }
 
 const sf::Vector2f& GameObject::getPosition() const
 {
-	// TODO: tu wstawiæ instrukcjê return
+	return sprite.getPosition();
 }
 
 void GameObject::draw(sf::RenderWindow& window)
 {
+	window.draw(sprite);
 }
