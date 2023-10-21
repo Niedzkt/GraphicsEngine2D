@@ -79,6 +79,21 @@ void PrimitiveRenderer::drawPolyline(const std::vector<Point2D>& points, const s
     }
 }
 
+void PrimitiveRenderer::drawPolyline(const std::vector<sf::Vector2f>& points, const sf::Color& color, float thickness, bool useBresenham)
+{
+    for (size_t i = 0; i < points.size() - 1; i++)
+    {
+        if (useBresenham) {
+            drawLineByBresenham(points[i], points[i + 1], color, thickness);
+        }
+        else
+        {
+            drawLine(points[i], points[i + 1], color, thickness);
+        }
+    }
+}
+
+
 void PrimitiveRenderer::drawClosedPolyline(const std::vector<Point2D>& points, const sf::Color& color, float thickness, bool useBresenham)
 {
     drawPolyline(points, color, thickness, useBresenham);
@@ -126,4 +141,18 @@ void PrimitiveRenderer::drawEllipse(float x0, float y0, float RX, float RY, cons
     }
 }
 
+void PrimitiveRenderer::drawPolygon(const std::vector<Point2D>& points, const sf::Color& color)
+{
+    if (points.size() < 3)
+    {
+        return;
+    }
+    std::vector<sf::Vector2f> sfPoints;
+    for (const auto& point : points)
+    {
+        sfPoints.push_back({ point.getX(), point.getY() });
+    }
 
+    sfPoints.push_back({ points[0].getX(), points[0].getY() });
+    drawPolyline(sfPoints, color);
+}

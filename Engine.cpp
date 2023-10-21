@@ -42,11 +42,9 @@ void Engine::draw()
 
 	renderer.drawPolyline(myPoints, sf::Color::Red, 2.0f, true); 
 	renderer.drawClosedPolyline(myPoints, sf::Color::Blue, 2.0f, false);
-	
 	renderer.drawCircleAlgorithm(300, 200, 50, sf::Color::Green);
-
 	renderer.drawEllipse(400.0f, 300.0f, 200.0f, 100.0f, sf::Color::Cyan);
-
+	renderer.drawPolygon(polygonPoints, sf::Color::Red);
 	point.draw(renderer);
 	window.display();
 }
@@ -112,6 +110,11 @@ Engine::Engine(unsigned int width, unsigned height, const std::string& title)
 	circleRadius = 100.0f;
 	circleColor = sf::Color::Red;
 
+	polygonPoints.push_back(Point2D(100, 200));
+	polygonPoints.push_back(Point2D(50, 100));
+	polygonPoints.push_back(Point2D(500, 1000));
+	polygonPoints.push_back(Point2D(400, 500));
+	
 }
 
 bool Engine::initialize()

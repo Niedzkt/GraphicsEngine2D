@@ -22,6 +22,7 @@ private:
 	LineSegment segment;
 	std::vector<LineSegment> segments;
 	std::vector<Point2D> myPoints;
+	std::vector<Point2D> polygonPoints;
 	Point2D circleCenter;
 	float circleRadius;
 	sf::Color circleColor;
