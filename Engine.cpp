@@ -45,6 +45,9 @@ void Engine::draw()
 	renderer.drawCircleAlgorithm(300, 200, 50, sf::Color::Green);
 	renderer.drawEllipse(400.0f, 300.0f, 200.0f, 100.0f, sf::Color::Cyan);
 	renderer.drawPolygon(polygonPoints, sf::Color::Red);
+	renderer.fillRectangle(200.0f, 100.0f, 100.0f, 400.0f, sf::Color::Cyan);
+	renderer.fillCircle(400.0f, 500.0f, 300.0f, sf::Color::Green);
+	renderer.fillPolygon(polygonPoints, sf::Color::Red);
 	point.draw(renderer);
 	window.display();
 }

@@ -156,3 +156,31 @@ void PrimitiveRenderer::drawPolygon(const std::vector<Point2D>& points, const sf
     sfPoints.push_back({ points[0].getX(), points[0].getY() });
     drawPolyline(sfPoints, color);
 }
+
+void PrimitiveRenderer::fillRectangle(float x, float y, float width, float height, const sf::Color& color)
+{
+    sf::RectangleShape rectangle(sf::Vector2f(width, height));
+    rectangle.setPosition(x, y);
+    rectangle.setFillColor(color);
+    window.draw(rectangle);
+}
+
+void PrimitiveRenderer::fillCircle(float x_center, float y_center, float radius, const sf::Color& color)
+{
+    sf::CircleShape circle(radius);
+    circle.setPosition(x_center - radius, y_center - radius);
+    circle.setFillColor(color);
+    window.draw(circle);
+}
+
+void PrimitiveRenderer::fillPolygon(const std::vector<Point2D>& points, const sf::Color& color)
+{
+    sf::ConvexShape polygon;
+    polygon.setPointCount(points.size());
+    for (size_t i = 0; i < points.size(); i++)
+    {
+        polygon.setPoint(i, sf::Vector2f(points[i].getX(), points[i].getY()));
+    }
+    polygon.setFillColor(color);
+    window.draw(polygon);
+}
