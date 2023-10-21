@@ -43,7 +43,9 @@ void Engine::draw()
 	renderer.drawPolyline(myPoints, sf::Color::Red, 2.0f, true); 
 	renderer.drawClosedPolyline(myPoints, sf::Color::Blue, 2.0f, false);
 	
-	renderer.drawCircleBresenham(circleCenter.getX(), circleCenter.getY(), circleRadius, circleColor);
+	renderer.drawCircleAlgorithm(300, 200, 50, sf::Color::Green);
+
+	renderer.drawEllipse(400.0f, 300.0f, 200.0f, 100.0f, sf::Color::Cyan);
 
 	point.draw(renderer);
 	window.display();

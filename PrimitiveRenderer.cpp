@@ -94,49 +94,36 @@ void PrimitiveRenderer::drawClosedPolyline(const std::vector<Point2D>& points, c
     }
 }
 
-void PrimitiveRenderer::drawCircleBresenham(int x_center, int y_center, int r, const sf::Color& color)
+void PrimitiveRenderer::drawCircleAlgorithm(int x_center, int y_center, int r, const sf::Color& color)
 {
-    int x = 0, y = r;
-    int d = 3 - 2 * r;
+    const float dTheta = 0.01;
 
-    putPixel(x_center + x, y_center - y, color);
-    putPixel(x_center - x, y_center - y, color);
-    putPixel(x_center + x, y_center + y, color);
-    putPixel(x_center - x, y_center + y, color);
-    putPixel(x_center + y, y_center - x, color);
-    putPixel(x_center - y, y_center - x, color);
-    putPixel(x_center + y, y_center + x, color);
-    putPixel(x_center - y, y_center + x, color);
-
-    while (y>=x)
+    for (float theta = 0;theta<= 2*PI;theta +=dTheta)
     {
-        x++;
-
-        if (d>0)
-        {
-            y--;
-            d = d + 4 * (x - y) + 10;
-        }
-        else
-        {
-            d = d + 4 * x + 6;
-
-            putPixel(x_center + x, y_center - y, color);
-            putPixel(x_center - x, y_center - y, color);
-            putPixel(x_center + x, y_center + y, color);
-            putPixel(x_center - x, y_center + y, color);
-            putPixel(x_center + y, y_center - x, color);
-            putPixel(x_center - y, y_center - x, color);
-            putPixel(x_center + y, y_center + x, color);
-            putPixel(x_center - y, y_center + x, color);
-        }
+        int x = x_center + r * std::cos(theta);
+        int y = y_center + r * std::sin(theta);
+        putPixel(x, y, color);
     }
 }
+
 
 void PrimitiveRenderer::putPixel(int x, int y, const sf::Color& color)
 {
     sf::Vertex point(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)), color);
     window.draw(&point, 1, sf::Points);
+}
+
+void PrimitiveRenderer::drawEllipse(float x0, float y0, float RX, float RY, const sf::Color& color)
+{
+    const float dTheta = 0.001;
+
+    for (float alpha = 0; alpha <= 2* PI; alpha+=dTheta)
+    {
+        float x = x0 + RX * cos(alpha);
+        float y = y0 + RY * sin(alpha);
+
+        putPixel(round(x), round(y), color);
+    }
 }
 
 
