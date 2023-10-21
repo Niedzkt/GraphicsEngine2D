@@ -131,10 +131,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="LineSegment.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Point2D.cpp" />
+    <ClCompile Include="PrimitiveRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="LineSegment.h" />
+    <ClInclude Include="Point2D.h" />
+    <ClInclude Include="PrimitiveRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\shrek.jpg" />

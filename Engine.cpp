@@ -31,6 +31,19 @@ void Engine::draw()
 {
 	window.clear(backgroundColor);
 
+	renderer.drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
+	renderer.drawLineByBresenham({ 300, 300 }, { 200, 400 }, sf::Color::Magenta, 1.0f);
+	renderer.drawRectangle({ 400, 100 }, { 150, 75 }, sf::Color::Green);
+	renderer.drawCircle({ 600, 300 }, 50, sf::Color::Blue);
+	for (const auto& segment : segments)
+	{
+		segment.draw(renderer, sf::Color::White, 2.0f, true);
+	}
+
+	renderer.drawPolyline(myPoints, sf::Color::Red, 2.0f, true); 
+	renderer.drawClosedPolyline(myPoints, sf::Color::Blue, 2.0f, false);
+
+	point.draw(renderer);
 	window.display();
 }
 
@@ -79,8 +92,18 @@ void Engine::handleMouseEvents(const sf::Event& event)
 }
 
 Engine::Engine(unsigned int width, unsigned height, const std::string& title)
-	:window(sf::VideoMode(width, height), title), deltaTime(0.0f), backgroundColor(sf::Color::Green)
+	:window(sf::VideoMode(width, height), title),
+	deltaTime(0.0f),
+	backgroundColor(sf::Color::Black),
+	renderer(window),
+	point(200.0f, 150.0f)
 {
+	segments.emplace_back(Point2D(200.0f, 100.0f), Point2D(500.0f, 400.0f));
+	segments.emplace_back(Point2D(300.0f, 200.0f), Point2D(400.0f, 450.0f));
+
+	myPoints = { Point2D(100, 100), Point2D(150, 200), Point2D(200, 150) };
+	myPoints = { Point2D(200, 200), Point2D(250, 300), Point2D(100, 350) };
+
 }
 
 bool Engine::initialize()

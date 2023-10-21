@@ -1,8 +1,13 @@
 #pragma once
+#include "PrimitiveRenderer.h"
+#include "Point2D.h"
+#include "LineSegment.h"
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 class Engine
 {
@@ -12,6 +17,11 @@ private:
 	sf::Color backgroundColor;
 	float deltaTime;
 	bool isFullScreen;
+	PrimitiveRenderer renderer;
+	Point2D point;
+	LineSegment segment;
+	std::vector<LineSegment> segments;
+	std::vector<Point2D> myPoints;
 
 	void handleEvents();
 	void update();
