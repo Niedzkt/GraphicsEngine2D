@@ -18,5 +18,7 @@ public:
 	void drawLineByBresenham(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color, float thickness);
 	void drawPolyline(const std::vector<Point2D>& points, const sf::Color& color, float thickness = 2.0f, bool useBresenham = false);
 	void drawClosedPolyline(const std::vector<Point2D>& points, const sf::Color& color, float thickness = 2.0f, bool useBresenham = false);
+	void drawCircleBresenham(int x_center, int y_center, int r, const sf::Color& color);
+	void putPixel(int x, int y, const sf::Color& color);
 };
 

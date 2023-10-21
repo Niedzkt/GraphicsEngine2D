@@ -42,6 +42,8 @@ void Engine::draw()
 
 	renderer.drawPolyline(myPoints, sf::Color::Red, 2.0f, true); 
 	renderer.drawClosedPolyline(myPoints, sf::Color::Blue, 2.0f, false);
+	
+	renderer.drawCircleBresenham(circleCenter.getX(), circleCenter.getY(), circleRadius, circleColor);
 
 	point.draw(renderer);
 	window.display();
@@ -103,6 +105,10 @@ Engine::Engine(unsigned int width, unsigned height, const std::string& title)
 
 	myPoints = { Point2D(100, 100), Point2D(150, 200), Point2D(200, 150) };
 	myPoints = { Point2D(200, 200), Point2D(250, 300), Point2D(100, 350) };
+
+	circleCenter = Point2D(width / 2, height / 2);
+	circleRadius = 100.0f;
+	circleColor = sf::Color::Red;
 
 }
 
