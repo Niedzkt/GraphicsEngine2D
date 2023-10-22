@@ -30,7 +30,12 @@ void Engine::update()
 void Engine::draw()
 {
 	window.clear(backgroundColor);
-
+	transformableRenderer.resetTransform();
+	transformableRenderer.translate(50, 50);
+	transformableRenderer.rotate(45);
+	transformableRenderer.scale(3, 3);
+	transformableRenderer.drawEllipse(200.0f, 200.0f, 40.0f, 50.0f, sf::Color::Red);
+/*
 	renderer.drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
 	renderer.drawLineByBresenham({ 300, 300 }, { 200, 400 }, sf::Color::Magenta, 1.0f);
 	renderer.drawRectangle({ 400, 100 }, { 150, 75 }, sf::Color::Green);
@@ -47,7 +52,7 @@ void Engine::draw()
 	renderer.drawPolygon(polygonPoints, sf::Color::Red);
 	renderer.fillRectangle(200.0f, 100.0f, 100.0f, 400.0f, sf::Color::Cyan);
 	renderer.fillCircle(400.0f, 500.0f, 300.0f, sf::Color::Green);
-	renderer.fillPolygon(polygonPoints, sf::Color::Red);
+	renderer.fillPolygon(polygonPoints, sf::Color::Red);*/
 	point.draw(renderer);
 	window.display();
 }
@@ -101,7 +106,8 @@ Engine::Engine(unsigned int width, unsigned height, const std::string& title)
 	deltaTime(0.0f),
 	backgroundColor(sf::Color::Black),
 	renderer(window),
-	point(200.0f, 150.0f)
+	point(200.0f, 150.0f),
+	transformableRenderer(window)
 {
 	segments.emplace_back(Point2D(200.0f, 100.0f), Point2D(500.0f, 400.0f));
 	segments.emplace_back(Point2D(300.0f, 200.0f), Point2D(400.0f, 450.0f));
