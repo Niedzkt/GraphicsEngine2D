@@ -60,6 +60,21 @@ void PrimitiveRenderer::drawLine(const GameObject& object, const sf::Color& colo
 {
     sf::Vector2f startPoint(object.x, object.y);
     sf::Vector2f endPoint(startPoint.x + lenght, startPoint.y);
+
+    sf::Vector2f center = (startPoint + endPoint) * 0.5f;
+
+    sf::Vector2f finalStartPoint = startPoint - center;
+    sf::Vector2f finalEndPoint = endPoint - center;
+    
+    if (useScaleTransform)
+    {
+        finalStartPoint = sf::Vector2f(finalStartPoint.x * scale.x, finalStartPoint.y * scale.y);
+        finalStartPoint = sf::Vector2f(finalEndPoint.x * scale.x, finalEndPoint.y * scale.y);
+    }
+
+    finalStartPoint += center;
+    finalEndPoint += center;
+
     drawLine(startPoint, endPoint, color, thickness);
 }
 
@@ -71,7 +86,7 @@ void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Ve
 	window.draw(rectangle);
 }
 
-void PrimitiveRenderer::drawRectangle(const GameObject& object, const sf::Vector2f& size, const sf::Color& color)
+void PrimitiveRenderer::drawPhysicsRectangle(const GameObject& object, const sf::Vector2f& size, const sf::Color& color)
 {
     sf::Vector2f position(object.x - size.x / 2, object.y - size.y / 2);
     drawRectangle(position, size, color);
@@ -85,7 +100,7 @@ void PrimitiveRenderer::drawCircle(const sf::Vector2f& center, float radius, con
 	window.draw(circle);
 }
 
-void PrimitiveRenderer::drawCircle(const GameObject& object, float radius, const sf::Color& color)
+void PrimitiveRenderer::drawPhysicsCircle(const GameObject& object, float radius, const sf::Color& color)
 {
     sf::Vector2f center(object.x, object.y);
     drawCircle(center, radius, color);

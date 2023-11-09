@@ -36,9 +36,11 @@ void Engine::draw()
 	//movingLine.vx = 50.0f;
 	//movingLine.vy = 50.0f;
 
-	renderer.drawLine(movingLine, sf::Color::Red, 5.0f, 200.0f);
+	renderer.setScale(5.0f, 5.0f).drawLine(movingLine, sf::Color::Red, 5.0f, 200.0f);
+	//renderer.resetTransformation();
 	renderer.setScale(5.0f,5.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
-
+	renderer.setScale(1.0f,1.0f).drawRectangle({ 400, 100 }, { 150, 75 }, sf::Color::Green);
+	renderer.drawCircle({ 600, 300 }, 50, sf::Color::Blue);
 /*
 	renderer..setScale(20.0f,20.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
 	renderer.drawLineByBresenham({ 300, 300 }, { 200, 400 }, sf::Color::Magenta, 1.0f);
