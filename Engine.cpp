@@ -25,18 +25,22 @@ void Engine::handleEvents()
 void Engine::update()
 {
 	/*TODO*/
+	movingLine.update(deltaTime);
 }
 
 void Engine::draw()
 {
 	window.clear(backgroundColor);
-	transformableRenderer.resetTransform();
-	transformableRenderer.translate(50, 50);
-	transformableRenderer.rotate(45);
-	transformableRenderer.scale(3, 3);
-	transformableRenderer.drawEllipse(200.0f, 200.0f, 40.0f, 50.0f, sf::Color::Red);
+
+	/*TEST FIZYKI!!!!!*/
+	//movingLine.vx = 50.0f;
+	//movingLine.vy = 50.0f;
+
+	renderer.drawLine(movingLine, sf::Color::Red, 5.0f, 200.0f);
+	renderer.setScale(5.0f,5.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
+
 /*
-	renderer.drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
+	renderer..setScale(20.0f,20.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
 	renderer.drawLineByBresenham({ 300, 300 }, { 200, 400 }, sf::Color::Magenta, 1.0f);
 	renderer.drawRectangle({ 400, 100 }, { 150, 75 }, sf::Color::Green);
 	renderer.drawCircle({ 600, 300 }, 50, sf::Color::Blue);
@@ -107,7 +111,7 @@ Engine::Engine(unsigned int width, unsigned height, const std::string& title)
 	backgroundColor(sf::Color::Black),
 	renderer(window),
 	point(200.0f, 150.0f),
-	transformableRenderer(window)
+	movingLine(100.0f, 100.0f, 200.0f, 250.0f)
 {
 	segments.emplace_back(Point2D(200.0f, 100.0f), Point2D(500.0f, 400.0f));
 	segments.emplace_back(Point2D(300.0f, 200.0f), Point2D(400.0f, 450.0f));

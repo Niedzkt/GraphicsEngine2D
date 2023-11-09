@@ -1,18 +1,66 @@
 #include "PrimitiveRenderer.h"
 
 PrimitiveRenderer::PrimitiveRenderer(sf::RenderWindow& renderWindow)
-	:window(renderWindow)
+    :window(renderWindow),
+    scale(1.0f, 1.0f),
+    useScaleTransform(true)
 {
+}
+
+PrimitiveRenderer& PrimitiveRenderer::setScale(float sx, float sy)
+{
+    this->scale.x = sx;
+    this->scale.x = sy;
+    return *this;
+}
+
+PrimitiveRenderer& PrimitiveRenderer::setRotation(float radians)
+{
+    rotation = radians;
+    return *this;
+}
+
+PrimitiveRenderer& PrimitiveRenderer::setTranslation(float dx, float dy)
+{
+    translation.x = dx;
+    translation.y = dy;
+    return *this;
 }
 
 void PrimitiveRenderer::drawLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color, float thickness)
 {
-	sf::VertexArray line(sf::Lines, 2);
-	line[0].position = startPoint;
-	line[0].color = color;
-	line[1].position = endPoint;
-	line[1].color = color;
+    sf::Vector2f center = (startPoint + endPoint) * 0.5f;
+
+    sf::Vector2f finalStartPoint = startPoint - center;
+    sf::Vector2f finalEndPoint = endPoint - center;
+
+    if (useScaleTransform) {
+        finalStartPoint = sf::Vector2f(finalStartPoint.x * scale.x, finalStartPoint.y * scale.y);
+        finalEndPoint = sf::Vector2f(finalEndPoint.x * scale.x, finalEndPoint.y * scale.y);
+    }
+    else {
+        finalStartPoint = startPoint;
+        finalEndPoint = endPoint;
+    }
+
+    finalStartPoint += center;
+    finalEndPoint += center;
+
+    sf::VertexArray line(sf::Lines, 2);
+    line[0].position = finalStartPoint;
+    line[0].color = color;
+    line[1].position = finalEndPoint;
+    line[1].color = color;
 	window.draw(line);
+
+    resetTransformation();
+}
+
+void PrimitiveRenderer::drawLine(const GameObject& object, const sf::Color& color, float thickness, float lenght)
+{
+    sf::Vector2f startPoint(object.x, object.y);
+    sf::Vector2f endPoint(startPoint.x + lenght, startPoint.y);
+    drawLine(startPoint, endPoint, color, thickness);
 }
 
 void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& color)
@@ -23,12 +71,24 @@ void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Ve
 	window.draw(rectangle);
 }
 
+void PrimitiveRenderer::drawRectangle(const GameObject& object, const sf::Vector2f& size, const sf::Color& color)
+{
+    sf::Vector2f position(object.x - size.x / 2, object.y - size.y / 2);
+    drawRectangle(position, size, color);
+}
+
 void PrimitiveRenderer::drawCircle(const sf::Vector2f& center, float radius, const sf::Color& color)
 {
 	sf::CircleShape circle(radius);
 	circle.setPosition(center - sf::Vector2f(radius, radius));
 	circle.setFillColor(color);
 	window.draw(circle);
+}
+
+void PrimitiveRenderer::drawCircle(const GameObject& object, float radius, const sf::Color& color)
+{
+    sf::Vector2f center(object.x, object.y);
+    drawCircle(center, radius, color);
 }
 
 void PrimitiveRenderer::drawLineByBresenham(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color , float thickness)
@@ -141,6 +201,12 @@ void PrimitiveRenderer::drawEllipse(float x0, float y0, float RX, float RY, cons
     }
 }
 
+void PrimitiveRenderer::drawEllipse(const GameObject& object, float x0, float y0, float RX, float RY, const sf::Color& color)
+{
+    /*TODO*/
+    drawEllipse(x0, y0, RX, RY, color);
+}
+
 void PrimitiveRenderer::drawPolygon(const std::vector<Point2D>& points, const sf::Color& color)
 {
     if (points.size() < 3)
@@ -157,6 +223,12 @@ void PrimitiveRenderer::drawPolygon(const std::vector<Point2D>& points, const sf
     drawPolyline(sfPoints, color);
 }
 
+void PrimitiveRenderer::drawPolygon(const GameObject& object, const std::vector<Point2D>& points, const sf::Color& color)
+{
+    /*TODO*/
+    drawPolygon(points, color);
+}
+
 void PrimitiveRenderer::fillRectangle(float x, float y, float width, float height, const sf::Color& color)
 {
     sf::RectangleShape rectangle(sf::Vector2f(width, height));
@@ -165,12 +237,24 @@ void PrimitiveRenderer::fillRectangle(float x, float y, float width, float heigh
     window.draw(rectangle);
 }
 
+void PrimitiveRenderer::fillRectangle(const GameObject& object, float x, float y, float width, float height, const sf::Color& color)
+{
+    /*TODO*/
+    fillRectangle(x, y, width, height, color);
+}
+
 void PrimitiveRenderer::fillCircle(float x_center, float y_center, float radius, const sf::Color& color)
 {
     sf::CircleShape circle(radius);
     circle.setPosition(x_center - radius, y_center - radius);
     circle.setFillColor(color);
     window.draw(circle);
+}
+
+void PrimitiveRenderer::fillCircle(const GameObject& object, float x_center, float y_center, float radius, const sf::Color& color)
+{
+    /*TODO*/
+    fillCircle(x_center, y_center, radius, color);
 }
 
 void PrimitiveRenderer::fillPolygon(const std::vector<Point2D>& points, const sf::Color& color)
@@ -183,4 +267,40 @@ void PrimitiveRenderer::fillPolygon(const std::vector<Point2D>& points, const sf
     }
     polygon.setFillColor(color);
     window.draw(polygon);
+}
+
+void PrimitiveRenderer::fillPolygon(const GameObject& object, const std::vector<Point2D>& points, const sf::Color& color)
+{
+    /*TODO*/
+    fillPolygon(points, color);
+}
+
+sf::Vector2f PrimitiveRenderer::applyTransform(const sf::Vector2f& point)
+{
+    sf::Vector2f transformed = point;
+
+    transformed.x = std::cos(rotation) * point.x - std::sin(rotation) * point.y;
+    transformed.x = std::sin(rotation) * point.x + std::cos(rotation) * point.y;
+
+    transformed.x *= scale.x;
+    transformed.y *= scale.y;
+
+    return transformed;
+}
+
+void PrimitiveRenderer::resetTransformation()
+{
+    scale = sf::Vector2f(1.0f, 1.0f);
+    rotation = 0.0f;
+    translation = sf::Vector2f(0.0f, 0.0f);
+}
+
+void PrimitiveRenderer::enableScaleTransform()
+{
+    useScaleTransform = true;
+}
+
+void PrimitiveRenderer::disableScaleTransform()
+{
+    useScaleTransform = false;
 }

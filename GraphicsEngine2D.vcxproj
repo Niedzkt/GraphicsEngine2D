@@ -131,18 +131,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="LineSegment.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MovingLine.cpp" />
     <ClCompile Include="Point2D.cpp" />
     <ClCompile Include="PrimitiveRenderer.cpp" />
-    <ClCompile Include="TransformablePrimitiveRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="LineSegment.h" />
+    <ClInclude Include="MovingLine.h" />
     <ClInclude Include="Point2D.h" />
     <ClInclude Include="PrimitiveRenderer.h" />
-    <ClInclude Include="TransformablePrimitiveRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

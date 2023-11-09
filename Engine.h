@@ -2,7 +2,7 @@
 #include "PrimitiveRenderer.h"
 #include "Point2D.h"
 #include "LineSegment.h"
-#include "TransformablePrimitiveRenderer.h"
+#include "MovingLine.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -19,7 +19,6 @@ private:
 	float deltaTime;
 	bool isFullScreen;
 	PrimitiveRenderer renderer;
-	TransformablePrimitiveRenderer transformableRenderer;
 	Point2D point;
 	LineSegment segment;
 	std::vector<LineSegment> segments;
@@ -28,6 +27,7 @@ private:
 	Point2D circleCenter;
 	float circleRadius;
 	sf::Color circleColor;
+	MovingLine movingLine;
 
 	void handleEvents();
 	void update();

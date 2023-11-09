@@ -36,5 +36,5 @@ void Point2D::setPosition(float x, float y)
 
 void Point2D::draw(PrimitiveRenderer& renderer, const sf::Color& color, float size) const
 {
-	renderer.drawRectangle({ x - size / 2, y - size / 2 }, { size, size }, color);
+	//renderer.drawRectangle({ x - size / 2, y - size / 2 }, { size, size }, color);
 }
