@@ -15,8 +15,10 @@ private:
 
 	sf::Vector2f scale;
 	float rotation;
-	sf::Vector2f translation;
+	sf::Vector2f translation = { 1, 1 };
 	bool useScaleTransform = true;
+	bool useRotationTransform = true;
+	bool useTranslationTransform = true;
 
 public:
 	PrimitiveRenderer(sf::RenderWindow& window);
@@ -51,5 +53,9 @@ public:
 	void resetTransformation();
 	void enableScaleTransform();
 	void disableScaleTransform();
+	void enableRotationTransform();
+	void disableRotationTransform();
+	void enableTranslationTransform();
+	void disableTranslationTransform();
 };
 

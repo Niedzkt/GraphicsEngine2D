@@ -3,7 +3,8 @@
 PrimitiveRenderer::PrimitiveRenderer(sf::RenderWindow& renderWindow)
     :window(renderWindow),
     scale(1.0f, 1.0f),
-    useScaleTransform(true)
+    useScaleTransform(true),
+    useRotationTransform(true)
 {
 }
 
@@ -34,6 +35,19 @@ void PrimitiveRenderer::drawLine(const sf::Vector2f& startPoint, const sf::Vecto
     sf::Vector2f finalStartPoint = startPoint - center;
     sf::Vector2f finalEndPoint = endPoint - center;
 
+    if (useRotationTransform) {
+        float s = sin(rotation);
+        float c = cos(rotation);
+
+        sf::Vector2f rotatedStartPoint(finalStartPoint.x * c - finalStartPoint.y * s,
+            finalStartPoint.x * s + finalStartPoint.y * c);
+        sf::Vector2f rotatedEndPoint(finalEndPoint.x * c - finalEndPoint.y * s,
+            finalEndPoint.x * s + finalEndPoint.y * c);
+
+        finalStartPoint = rotatedStartPoint;
+        finalEndPoint = rotatedEndPoint;
+    }
+
     if (useScaleTransform) {
         finalStartPoint = sf::Vector2f(finalStartPoint.x * scale.x, finalStartPoint.y * scale.y);
         finalEndPoint = sf::Vector2f(finalEndPoint.x * scale.x, finalEndPoint.y * scale.y);
@@ -43,8 +57,16 @@ void PrimitiveRenderer::drawLine(const sf::Vector2f& startPoint, const sf::Vecto
         finalEndPoint = endPoint;
     }
 
-    finalStartPoint += center;
-    finalEndPoint += center;
+    if (useTranslationTransform)
+    {
+        finalStartPoint += translation;
+        finalEndPoint += translation;
+    }
+    else
+    {
+        finalStartPoint += center;
+        finalEndPoint += center;
+    }
 
     sf::VertexArray line(sf::Lines, 2);
     line[0].position = finalStartPoint;
@@ -80,15 +102,30 @@ void PrimitiveRenderer::drawLine(const GameObject& object, const sf::Color& colo
 
 void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& color)
 {
-	sf::RectangleShape rectangle(size);
+    sf::RectangleShape rectangle(size);
 
     if (useScaleTransform) {
         rectangle.setScale(scale.x, scale.y);
     }
+    
+    if (useRotationTransform)
+    {
+        rectangle.setRotation(rotation * 180 / PI);
+        rectangle.setOrigin(size.x / 2, size.y / 2);
+    }
+    if (useTranslationTransform)
+    {
+        rectangle.setPosition(position + translation);
+    }
+    else
+    {
+        rectangle.setPosition(position);
+    }
 
-	rectangle.setPosition(position);
-	rectangle.setFillColor(color);
-	window.draw(rectangle);
+    rectangle.setFillColor(color);
+    window.draw(rectangle);
+
+    resetTransformation();
 }
 
 void PrimitiveRenderer::drawPhysicsRectangle(const GameObject& object, const sf::Vector2f& size, const sf::Color& color)
@@ -110,8 +147,21 @@ void PrimitiveRenderer::drawCircle(const sf::Vector2f& center, float radius, con
         circle.setScale(scale.x, scale.y);
     }
 
-    sf::Vector2f scaledRadius(radius * scale.x, radius * scale.y);
-    circle.setPosition(center - scaledRadius);
+    if (useRotationTransform)
+    {
+        circle.setRotation(rotation * 180 / PI);
+        circle.setOrigin(radius * scale.x, radius * scale.y);
+    }
+
+    if (useTranslationTransform) {
+        circle.setPosition(center + translation - sf::Vector2f(radius * scale.x, radius * scale.y));
+
+    }
+    else
+    {
+        circle.setPosition(center);
+    }
+
     circle.setFillColor(color);
     window.draw(circle);
 
@@ -337,4 +387,24 @@ void PrimitiveRenderer::enableScaleTransform()
 void PrimitiveRenderer::disableScaleTransform()
 {
     useScaleTransform = false;
+}
+
+void PrimitiveRenderer::enableRotationTransform()
+{
+    useRotationTransform = true;
+}
+
+void PrimitiveRenderer::disableRotationTransform()
+{
+    useRotationTransform = false;
+}
+
+void PrimitiveRenderer::enableTranslationTransform()
+{
+    useTranslationTransform = true;
+}
+
+void PrimitiveRenderer::disableTranslationTransform()
+{
+    useTranslationTransform = false;
 }

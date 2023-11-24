@@ -35,11 +35,11 @@ void Engine::draw()
 	/*TEST FIZYKI!!!!!*/
 	//movingLine.vx = 50.0f;
 	//movingLine.vy = 50.0f;
-
-	renderer.setScale(5.0f, 5.0f).drawLine(movingLine, sf::Color::Red, 5.0f, 200.0f);
+	renderer.disableTranslationTransform();
+	renderer.setRotation(20.0f).drawLine(movingLine, sf::Color::Red, 5.0f, 200.0f);
 	//renderer.resetTransformation();
 	renderer.setScale(5.0f,5.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
-	renderer.setScale(2.0f,3.0f).drawRectangle({ 400, 100 }, { 150, 75 }, sf::Color::Green);
+	renderer.setRotation(20.0f).drawRectangle({400, 100}, {150, 75}, sf::Color::Green);
 	renderer.setScale(2.0f,2.0f).drawCircle({600, 300}, 50, sf::Color::Blue);
 /*
 	renderer..setScale(20.0f,20.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
