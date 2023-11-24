@@ -10,7 +10,7 @@ PrimitiveRenderer::PrimitiveRenderer(sf::RenderWindow& renderWindow)
 PrimitiveRenderer& PrimitiveRenderer::setScale(float sx, float sy)
 {
     this->scale.x = sx;
-    this->scale.x = sy;
+    this->scale.y = sy;
     return *this;
 }
 
@@ -81,6 +81,11 @@ void PrimitiveRenderer::drawLine(const GameObject& object, const sf::Color& colo
 void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& color)
 {
 	sf::RectangleShape rectangle(size);
+
+    if (useScaleTransform) {
+        rectangle.setScale(scale.x, scale.y);
+    }
+
 	rectangle.setPosition(position);
 	rectangle.setFillColor(color);
 	window.draw(rectangle);
@@ -89,15 +94,28 @@ void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Ve
 void PrimitiveRenderer::drawPhysicsRectangle(const GameObject& object, const sf::Vector2f& size, const sf::Color& color)
 {
     sf::Vector2f position(object.x - size.x / 2, object.y - size.y / 2);
+
+    if (useScaleTransform) {
+        position.x *= scale.x;
+        position.y *= scale.y;
+    }
     drawRectangle(position, size, color);
 }
 
 void PrimitiveRenderer::drawCircle(const sf::Vector2f& center, float radius, const sf::Color& color)
 {
-	sf::CircleShape circle(radius);
-	circle.setPosition(center - sf::Vector2f(radius, radius));
-	circle.setFillColor(color);
-	window.draw(circle);
+    sf::CircleShape circle(radius);
+
+    if (useScaleTransform) {
+        circle.setScale(scale.x, scale.y);
+    }
+
+    sf::Vector2f scaledRadius(radius * scale.x, radius * scale.y);
+    circle.setPosition(center - scaledRadius);
+    circle.setFillColor(color);
+    window.draw(circle);
+
+    resetTransformation();
 }
 
 void PrimitiveRenderer::drawPhysicsCircle(const GameObject& object, float radius, const sf::Color& color)
@@ -140,6 +158,7 @@ void PrimitiveRenderer::drawLineByBresenham(const sf::Vector2f& startPoint, cons
         }
     }
 }
+
 void PrimitiveRenderer::drawPolyline(const std::vector<Point2D>& points, const sf::Color& color, float thickness, bool useBresenham)
 {
     for (size_t i = 0; i < points.size() - 1; i++)

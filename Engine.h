@@ -3,6 +3,7 @@
 #include "Point2D.h"
 #include "LineSegment.h"
 #include "MovingLine.h"
+#include "MovingRectangle.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
