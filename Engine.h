@@ -4,6 +4,7 @@
 #include "LineSegment.h"
 #include "MovingLine.h"
 #include "MovingRectangle.h"
+#include "BitmapRenderer.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -29,6 +30,7 @@ private:
 	float circleRadius;
 	sf::Color circleColor;
 	MovingLine movingLine;
+	BitmapRenderer bitmapRenderer;
 
 	void handleEvents();
 	void update();
