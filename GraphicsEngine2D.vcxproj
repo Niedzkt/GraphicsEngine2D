@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedBitmap.cpp" />
     <ClCompile Include="BitmapRenderer.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="PrimitiveRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedBitmap.h" />
     <ClInclude Include="BitmapRenderer.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GameObject.h" />

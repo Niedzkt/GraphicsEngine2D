@@ -41,13 +41,9 @@ public:
 	void drawEllipse(float x0, float y0, float RX, float RY, const sf::Color& color);
 	void drawEllipse(const GameObject& object, float x0, float y0, float RX, float RY, const sf::Color& color);
 	void drawPolygon(const std::vector<Point2D>& points, const sf::Color& color);
-	void drawPolygon(const GameObject& object, const std::vector<Point2D>& points, const sf::Color& color);
 	void fillRectangle(float x, float y, float width, float height, const sf::Color& color);
-	void fillRectangle(const GameObject& object, float x, float y, float width, float height, const sf::Color& color);
 	void fillCircle(float x_center, float y_center, float radius, const sf::Color& color);
-	void fillCircle(const GameObject& object, float x_center, float y_center, float radius, const sf::Color& color);
 	void fillPolygon(const std::vector<Point2D>& points, const sf::Color& color);
-	void fillPolygon(const GameObject& object, const std::vector<Point2D>& points, const sf::Color& color);
 
 	sf::Vector2f applyTransform(const sf::Vector2f& point);
 	void resetTransformation();

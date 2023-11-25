@@ -307,12 +307,6 @@ void PrimitiveRenderer::drawPolygon(const std::vector<Point2D>& points, const sf
     drawPolyline(sfPoints, color);
 }
 
-void PrimitiveRenderer::drawPolygon(const GameObject& object, const std::vector<Point2D>& points, const sf::Color& color)
-{
-    /*TODO*/
-    drawPolygon(points, color);
-}
-
 void PrimitiveRenderer::fillRectangle(float x, float y, float width, float height, const sf::Color& color)
 {
     sf::RectangleShape rectangle(sf::Vector2f(width, height));
@@ -321,24 +315,12 @@ void PrimitiveRenderer::fillRectangle(float x, float y, float width, float heigh
     window.draw(rectangle);
 }
 
-void PrimitiveRenderer::fillRectangle(const GameObject& object, float x, float y, float width, float height, const sf::Color& color)
-{
-    /*TODO*/
-    fillRectangle(x, y, width, height, color);
-}
-
 void PrimitiveRenderer::fillCircle(float x_center, float y_center, float radius, const sf::Color& color)
 {
     sf::CircleShape circle(radius);
     circle.setPosition(x_center - radius, y_center - radius);
     circle.setFillColor(color);
     window.draw(circle);
-}
-
-void PrimitiveRenderer::fillCircle(const GameObject& object, float x_center, float y_center, float radius, const sf::Color& color)
-{
-    /*TODO*/
-    fillCircle(x_center, y_center, radius, color);
 }
 
 void PrimitiveRenderer::fillPolygon(const std::vector<Point2D>& points, const sf::Color& color)
@@ -351,12 +333,6 @@ void PrimitiveRenderer::fillPolygon(const std::vector<Point2D>& points, const sf
     }
     polygon.setFillColor(color);
     window.draw(polygon);
-}
-
-void PrimitiveRenderer::fillPolygon(const GameObject& object, const std::vector<Point2D>& points, const sf::Color& color)
-{
-    /*TODO*/
-    fillPolygon(points, color);
 }
 
 sf::Vector2f PrimitiveRenderer::applyTransform(const sf::Vector2f& point)

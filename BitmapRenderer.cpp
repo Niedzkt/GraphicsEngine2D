@@ -11,6 +11,7 @@ BitmapRenderer::BitmapRenderer(const std::string& filePath, const sf::Vector2f& 
 bool BitmapRenderer::loadBitmap(const std::string& filePath)
 {
 	if (!texture.loadFromFile(filePath)) {
+		std::cout << "ERROR::BITMAP TEXTURE DOES NOT EXISTS" << std::endl;
 		return false;
 	}
 	sprite.setTexture(texture);

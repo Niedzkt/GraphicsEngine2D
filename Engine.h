@@ -5,6 +5,7 @@
 #include "MovingLine.h"
 #include "MovingRectangle.h"
 #include "BitmapRenderer.h"
+#include "AnimatedBitmap.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -31,6 +32,7 @@ private:
 	sf::Color circleColor;
 	MovingLine movingLine;
 	BitmapRenderer bitmapRenderer;
+	AnimatedBitmap animatedBitmap;
 
 	void handleEvents();
 	void update();
