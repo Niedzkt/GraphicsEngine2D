@@ -1,39 +1,22 @@
 #pragma once
 #include "GameObject.h"
+#include "PrimitiveRenderer.h"
 #include <SFML/Graphics.hpp>
 
-class MovingRectangle : public GameObject {
+class MovingRectangle : public GameObject
+{
 public:
-    MovingRectangle(float x, float y, float width, float height, sf::Color color, sf::Vector2f velocity)
-        : GameObject(x, y), width(width), height(height), color(color), velocity(velocity) {
-        this->ax = 0; 
-        this->ay = 9.81; 
-        rectangle.setSize(sf::Vector2f(width, height));
-        rectangle.setFillColor(color);
-        rectangle.setPosition(x, y);
-    }
+	MovingRectangle(float x, float y, float width, float height, sf::Color color);
 
-    void update(float deltaTime) {
-        velocity.x += ax * deltaTime;
-        velocity.y += ay * deltaTime;
+	virtual void update(float deltaTime) override;
+	virtual void render() override;
 
-
-        position.x += velocity.x * deltaTime;
-        position.y += velocity.y * deltaTime;
-
-
-        rectangle.setPosition(position);
-    }
-
-    virtual void render() override {
-    }
-
+	float getWidth() const;
+	float getHeight() const;
+	sf::Color getColor() const;
 
 private:
-    float width, height;
-    sf::Color color;
-    sf::Vector2f velocity;
-    float ax, ay; 
-    sf::RectangleShape rectangle;
-    sf::Vector2f position;
+	float width, height;
+	sf::Color color;
 };
+

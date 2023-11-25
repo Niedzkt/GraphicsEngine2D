@@ -128,15 +128,29 @@ void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Ve
     resetTransformation();
 }
 
-void PrimitiveRenderer::drawPhysicsRectangle(const GameObject& object, const sf::Vector2f& size, const sf::Color& color)
+void PrimitiveRenderer::drawPhysicsRectangle(const MovingRectangle& rectangle)
 {
-    sf::Vector2f position(object.x - size.x / 2, object.y - size.y / 2);
+    sf::RectangleShape shape(sf::Vector2f(rectangle.getWidth(), rectangle.getHeight()));
+
+    shape.setPosition(rectangle.x, rectangle.y);
+    shape.setFillColor(rectangle.getColor());
 
     if (useScaleTransform) {
-        position.x *= scale.x;
-        position.y *= scale.y;
+        shape.setScale(scale.x, scale.y);
     }
-    drawRectangle(position, size, color);
+
+    if (useRotationTransform) {
+        shape.setRotation(rotation * 180 / PI);
+        shape.setOrigin(rectangle.getWidth() / 2, rectangle.getHeight() / 2);
+    }
+
+    if (useTranslationTransform) {
+        shape.setPosition(shape.getPosition() + translation);
+    }
+
+    window.draw(shape);
+
+    resetTransformation();
 }
 
 void PrimitiveRenderer::drawCircle(const sf::Vector2f& center, float radius, const sf::Color& color)

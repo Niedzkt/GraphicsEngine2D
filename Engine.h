@@ -3,7 +3,6 @@
 #include "Point2D.h"
 #include "LineSegment.h"
 #include "MovingLine.h"
-#include "MovingRectangle.h"
 #include "BitmapRenderer.h"
 #include "AnimatedBitmap.h"
 
@@ -33,6 +32,7 @@ private:
 	MovingLine movingLine;
 	BitmapRenderer bitmapRenderer;
 	AnimatedBitmap animatedBitmap;
+	MovingRectangle movingRectangle;
 
 	void handleEvents();
 	void update();

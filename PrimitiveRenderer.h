@@ -4,8 +4,10 @@
 #include <cmath>
 #include "Point2D.h"
 #include "GameObject.h"
+#include "MovingRectangle.h"
 
 class Point2D;
+class MovingRectangle;
 
 class PrimitiveRenderer
 {
@@ -29,7 +31,7 @@ public:
 	void drawLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color, float thickness = 1.0f);
 	void drawLine(const GameObject& object, const sf::Color& color, float thickness = 1.0f, float lenght = 70.0f);
 	void drawRectangle(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& color);
-	void drawPhysicsRectangle(const GameObject& object, const sf::Vector2f& size, const sf::Color& color);
+	void drawPhysicsRectangle(const MovingRectangle& rectangle);
 	void drawCircle(const sf::Vector2f& center, float radius, const sf::Color& color);
 	void drawPhysicsCircle(const GameObject& object, float radius, const sf::Color& color);
 	void drawLineByBresenham(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color, float thickness);

@@ -137,6 +137,7 @@
     <ClCompile Include="LineSegment.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MovingLine.cpp" />
+    <ClCompile Include="MovingRectangle.cpp" />
     <ClCompile Include="Point2D.cpp" />
     <ClCompile Include="PrimitiveRenderer.cpp" />
   </ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="LineSegment.h" />
     <ClInclude Include="MovingLine.h" />
+    <ClInclude Include="MovingRectangle.h" />
     <ClInclude Include="Point2D.h" />
     <ClInclude Include="PrimitiveRenderer.h" />
   </ItemGroup>
