@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+
 class Engine
 {
 private:
@@ -43,6 +44,7 @@ private:
 	void handleMouseEvents(const sf::Event& event);
 
 public:
+	sf::Vector2u getWindowSize() const;
 	Engine(unsigned int width = 800, unsigned height = 600, const std::string& title = "Engine 2D");
 	bool initialize();
 	void setFullscreen(bool fullscreen);

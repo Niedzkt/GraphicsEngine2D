@@ -15,6 +15,28 @@ void MovingCircle::update(float deltaTime)
 
 	x += vx * deltaTime;
 	y += vy * deltaTime;
+
+    sf::Vector2u windowSize = GameObject::getWindowSize();
+
+ 
+    if (x - radius < 0) {
+        x = radius;  
+        vx = -vx; 
+    }
+    else if (x + radius > windowSize.x) {
+        x = windowSize.x - radius;  
+        vx = -vx;
+    }
+
+    
+    if (y - radius < 0) {
+        y = radius;
+        vy = -vy; 
+    }
+    else if (y + radius > windowSize.y) {
+        y = windowSize.y - radius;  
+        vy = -vy;
+    }
 }
 
 void MovingCircle::render()

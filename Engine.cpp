@@ -114,6 +114,11 @@ void Engine::handleMouseEvents(const sf::Event& event)
 	}
 }
 
+sf::Vector2u Engine::getWindowSize() const
+{
+	return window.getSize();
+}
+
 Engine::Engine(unsigned int width, unsigned height, const std::string& title)
 	:window(sf::VideoMode(width, height), title),
 	deltaTime(0.0f),
@@ -181,6 +186,9 @@ void Engine::setFramerateLimit(unsigned int limit)
 
 void Engine::mainLoop()
 {
+	sf::Vector2u windowSize = window.getSize();
+	GameObject::setWindowSize(windowSize);
+
 	while (window.isOpen())
 	{
 		deltaTime = clock.restart().asSeconds();

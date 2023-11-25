@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+
 #include <SFML/Graphics.hpp>
 
 class MovingRectangle : public GameObject
