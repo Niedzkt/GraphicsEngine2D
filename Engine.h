@@ -33,6 +33,7 @@ private:
 	BitmapRenderer bitmapRenderer;
 	AnimatedBitmap animatedBitmap;
 	MovingRectangle movingRectangle;
+	MovingCircle movingCircle;
 
 	void handleEvents();
 	void update();

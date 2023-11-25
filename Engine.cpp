@@ -28,6 +28,7 @@ void Engine::update()
 	movingLine.update(deltaTime);
 	animatedBitmap.update(deltaTime);
 	movingRectangle.update(deltaTime);
+	movingCircle.update(deltaTime);
 }
 
 void Engine::draw()
@@ -46,6 +47,7 @@ void Engine::draw()
 	bitmapRenderer.setRotation(20.0f).draw(window);
 	animatedBitmap.draw(window);
 	renderer.drawPhysicsRectangle(movingRectangle);
+	renderer.drawPhysicsCircle(movingCircle);
 /*
 	renderer..setScale(20.0f,20.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
 	renderer.drawLineByBresenham({ 300, 300 }, { 200, 400 }, sf::Color::Magenta, 1.0f);
@@ -121,7 +123,8 @@ Engine::Engine(unsigned int width, unsigned height, const std::string& title)
 	movingLine(100.0f, 100.0f, 200.0f, 250.0f),
 	bitmapRenderer("textures/shrek.jpg", sf::Vector2f(100,100)),
 	animatedBitmap("textures/test_player.png", sf::Vector2i(64, 64), 4, 0.1f, sf::Vector2f(100, 100)),
-	movingRectangle(100,100,50,50,sf::Color::Red)
+	movingRectangle(100,100,50,50,sf::Color::Red),
+	movingCircle(300,300,30, sf::Color::Yellow)
 {
 	segments.emplace_back(Point2D(200.0f, 100.0f), Point2D(500.0f, 400.0f));
 	segments.emplace_back(Point2D(300.0f, 200.0f), Point2D(400.0f, 450.0f));

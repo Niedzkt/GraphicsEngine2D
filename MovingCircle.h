@@ -2,20 +2,19 @@
 #include "GameObject.h"
 #include <SFML/Graphics.hpp>
 
-class MovingRectangle : public GameObject
+class MovingCircle : public GameObject
 {
 public:
-	MovingRectangle(float x, float y, float width, float height, sf::Color color);
+	MovingCircle(float x, float y, float radius, sf::Color color);
 
 	virtual void update(float deltaTime) override;
 	virtual void render() override;
 
-	float getWidth() const;
-	float getHeight() const;
+	float getRadius() const;
 	sf::Color getColor() const;
 
 private:
-	float width, height;
+	float radius;
 	sf::Color color;
 };
 

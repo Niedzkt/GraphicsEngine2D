@@ -5,9 +5,9 @@
 #include "Point2D.h"
 #include "GameObject.h"
 #include "MovingRectangle.h"
+#include "MovingCircle.h"
 
 class Point2D;
-class MovingRectangle;
 
 class PrimitiveRenderer
 {
@@ -33,7 +33,7 @@ public:
 	void drawRectangle(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& color);
 	void drawPhysicsRectangle(const MovingRectangle& rectangle);
 	void drawCircle(const sf::Vector2f& center, float radius, const sf::Color& color);
-	void drawPhysicsCircle(const GameObject& object, float radius, const sf::Color& color);
+	void drawPhysicsCircle(const MovingCircle& circle);
 	void drawLineByBresenham(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color, float thickness);
 	void drawPolyline(const std::vector<Point2D>& points, const sf::Color& color, float thickness = 2.0f, bool useBresenham = false);
 	void drawPolyline(const std::vector<sf::Vector2f>& points, const sf::Color& color, float thickness = 2.0f, bool useBresenham = false);

@@ -182,10 +182,29 @@ void PrimitiveRenderer::drawCircle(const sf::Vector2f& center, float radius, con
     resetTransformation();
 }
 
-void PrimitiveRenderer::drawPhysicsCircle(const GameObject& object, float radius, const sf::Color& color)
+void PrimitiveRenderer::drawPhysicsCircle(const MovingCircle& circle)
 {
-    sf::Vector2f center(object.x, object.y);
-    drawCircle(center, radius, color);
+    sf::CircleShape shape(circle.getRadius());
+
+    shape.setPosition(circle.x, circle.y);
+    shape.setFillColor(circle.getColor());
+
+    if (useScaleTransform) {
+        shape.setScale(scale.x, scale.y);
+    }
+
+    if (useRotationTransform) {
+        shape.setRotation(rotation * 180 / PI);
+        shape.setOrigin(circle.getRadius() * scale.x, circle.getRadius() * scale.y);
+    }
+
+    if (useTranslationTransform) {
+        shape.setPosition(shape.getPosition() + translation);
+    }
+
+    window.draw(shape);
+
+    resetTransformation();
 }
 
 void PrimitiveRenderer::drawLineByBresenham(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color , float thickness)
