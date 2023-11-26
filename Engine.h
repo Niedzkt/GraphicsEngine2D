@@ -5,6 +5,7 @@
 #include "MovingLine.h"
 #include "BitmapRenderer.h"
 #include "AnimatedBitmap.h"
+#include "SoundManager.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -35,6 +36,7 @@ private:
 	AnimatedBitmap animatedBitmap;
 	MovingRectangle movingRectangle;
 	MovingCircle movingCircle;
+	SoundManager soundManager;
 
 	void handleEvents();
 	void update();

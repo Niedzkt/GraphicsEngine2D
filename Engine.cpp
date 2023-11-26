@@ -48,8 +48,8 @@ void Engine::draw()
 	animatedBitmap.draw(window);
 	renderer.drawPhysicsRectangle(movingRectangle);
 	renderer.drawPhysicsCircle(movingCircle);
-/*
-	renderer..setScale(20.0f,20.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
+
+	renderer.setScale(20.0f,20.0f).drawLine({ 100, 100 }, { 200, 300 }, sf::Color::Red, 5.0f);
 	renderer.drawLineByBresenham({ 300, 300 }, { 200, 400 }, sf::Color::Magenta, 1.0f);
 	renderer.drawRectangle({ 400, 100 }, { 150, 75 }, sf::Color::Green);
 	renderer.drawCircle({ 600, 300 }, 50, sf::Color::Blue);
@@ -65,7 +65,7 @@ void Engine::draw()
 	renderer.drawPolygon(polygonPoints, sf::Color::Red);
 	renderer.fillRectangle(200.0f, 100.0f, 100.0f, 400.0f, sf::Color::Cyan);
 	renderer.fillCircle(400.0f, 500.0f, 300.0f, sf::Color::Green);
-	renderer.fillPolygon(polygonPoints, sf::Color::Red);*/
+	renderer.fillPolygon(polygonPoints, sf::Color::Red);
 	point.draw(renderer);
 	window.display();
 }
@@ -90,6 +90,10 @@ void Engine::handleKeyboardEvents(const sf::Event& event)
 		if (event.key.code == sf::Keyboard::Escape)
 		{
 			window.close();
+		}
+		if (event.key.code == sf::Keyboard::Space) 
+		{
+			soundManager.playSound("stableRonaldo");
 		}
 	}
 }
@@ -145,6 +149,9 @@ Engine::Engine(unsigned int width, unsigned height, const std::string& title)
 	polygonPoints.push_back(Point2D(50, 100));
 	polygonPoints.push_back(Point2D(500, 1000));
 	polygonPoints.push_back(Point2D(400, 500));
+
+	soundManager.loadSound("stableRonaldo", "music/music.wav");
+	soundManager.setVolume(50.0f);
 	
 }
 

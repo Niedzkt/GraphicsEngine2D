@@ -25,6 +25,7 @@ void MovingRectangle::update(float deltaTime)
     else if (x + width > windowSize.x) {
         x = windowSize.x - width;  
         vx = -vx;
+        color = sf::Color::Blue;
     }
 
     if (y < 0) {
