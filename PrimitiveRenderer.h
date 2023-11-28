@@ -41,7 +41,6 @@ public:
 	void drawCircleAlgorithm(int x_center, int y_center, int r, const sf::Color& color);
 	void putPixel(int x, int y, const sf::Color& color);
 	void drawEllipse(float x0, float y0, float RX, float RY, const sf::Color& color);
-	void drawEllipse(const GameObject& object, float x0, float y0, float RX, float RY, const sf::Color& color);
 	void drawPolygon(const std::vector<Point2D>& points, const sf::Color& color);
 	void fillRectangle(float x, float y, float width, float height, const sf::Color& color);
 	void fillCircle(float x_center, float y_center, float radius, const sf::Color& color);

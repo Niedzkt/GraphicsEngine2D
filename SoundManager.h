@@ -9,6 +9,8 @@ public:
 	bool loadSound(const std::string& name, const std::string& filePath);
 	void playSound(const std::string& name);
 	void setVolume(float volume);
+	void stopSound(const std::string& name);
+
 
 private:
 	std::unordered_map<std::string, sf::SoundBuffer> soundBuffers;

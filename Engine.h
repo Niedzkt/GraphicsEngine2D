@@ -12,6 +12,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 
 class Engine
@@ -28,6 +30,7 @@ private:
 	std::vector<LineSegment> segments;
 	std::vector<Point2D> myPoints;
 	std::vector<Point2D> polygonPoints;
+	std::vector<MovingRectangle> movingRectangles;
 	Point2D circleCenter;
 	float circleRadius;
 	sf::Color circleColor;

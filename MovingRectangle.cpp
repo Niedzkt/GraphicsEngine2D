@@ -4,7 +4,7 @@ MovingRectangle::MovingRectangle(float x, float y, float width, float height, sf
 	:GameObject(x,y), width(width), height(height), color(color)
 {
 	vx = vy = 0;
-	ax = 100;
+	ax = 0;
 	ay = 9.81;
 }
 
@@ -25,7 +25,6 @@ void MovingRectangle::update(float deltaTime)
     else if (x + width > windowSize.x) {
         x = windowSize.x - width;  
         vx = -vx;
-        color = sf::Color::Blue;
     }
 
     if (y < 0) {

@@ -1,5 +1,6 @@
 #include "PrimitiveRenderer.h"
-
+// Konstruktor klasy `PrimitiveRenderer` inicjalizuje obiekt z podanym oknem renderowania oraz domyœlnymi
+// wartoœciami transformacji (skala, rotacja, translacja).
 PrimitiveRenderer::PrimitiveRenderer(sf::RenderWindow& renderWindow)
     :window(renderWindow),
     scale(1.0f, 1.0f),
@@ -7,7 +8,8 @@ PrimitiveRenderer::PrimitiveRenderer(sf::RenderWindow& renderWindow)
     useRotationTransform(true)
 {
 }
-
+// Metoda `setScale` klasy `PrimitiveRenderer` ustawia skalê dla przysz³ych operacji rysowania.
+// Przyjmuje wartoœci skali w osiach x i y, co pozwala na skalowanie rysowanych obiektów.
 PrimitiveRenderer& PrimitiveRenderer::setScale(float sx, float sy)
 {
     this->scale.x = sx;
@@ -15,12 +17,16 @@ PrimitiveRenderer& PrimitiveRenderer::setScale(float sx, float sy)
     return *this;
 }
 
+// Metoda `setRotation` ustawia k¹t rotacji dla przysz³ych operacji rysowania.
+// K¹t jest podany w radianach, co pozwala na obracanie rysowanych obiektów.
 PrimitiveRenderer& PrimitiveRenderer::setRotation(float radians)
 {
     rotation = radians;
     return *this;
 }
 
+// Metoda `setTranslation` ustawia translacjê (przesuniêcie) dla przysz³ych operacji rysowania.
+// Przyjmuje wartoœci przesuniêcia w osiach x i y, co pozwala na przesuwanie rysowanych obiektów.
 PrimitiveRenderer& PrimitiveRenderer::setTranslation(float dx, float dy)
 {
     translation.x = dx;
@@ -28,6 +34,8 @@ PrimitiveRenderer& PrimitiveRenderer::setTranslation(float dx, float dy)
     return *this;
 }
 
+// Metoda `drawLine` rysuje liniê miêdzy dwoma punktami. Wykorzystuje wczeœniej ustawione transformacje
+// (skala, rotacja, translacja) do modyfikacji wygl¹du linii.
 void PrimitiveRenderer::drawLine(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color, float thickness)
 {
     sf::Vector2f center = (startPoint + endPoint) * 0.5f;
@@ -78,6 +86,8 @@ void PrimitiveRenderer::drawLine(const sf::Vector2f& startPoint, const sf::Vecto
     resetTransformation();
 }
 
+// Metoda `drawLine` rysuje liniê zwi¹zane z podanym obiektem `GameObject`. Wykorzystuje obecne
+// transformacje i pozycjê obiektu do okreœlenia pocz¹tku i koñca linii.
 void PrimitiveRenderer::drawLine(const GameObject& object, const sf::Color& color, float thickness, float lenght)
 {
     sf::Vector2f startPoint(object.x, object.y);
@@ -100,6 +110,8 @@ void PrimitiveRenderer::drawLine(const GameObject& object, const sf::Color& colo
     drawLine(startPoint, endPoint, color, thickness);
 }
 
+// Metoda `drawRectangle` rysuje prostok¹t o podanej pozycji, rozmiarze i kolorze.
+// Tak jak w innych metodach, wykorzystuje wczeœniej ustawione transformacje.
 void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Vector2f& size, const sf::Color& color)
 {
     sf::RectangleShape rectangle(size);
@@ -128,6 +140,8 @@ void PrimitiveRenderer::drawRectangle(const sf::Vector2f& position, const sf::Ve
     resetTransformation();
 }
 
+// Metoda `drawPhysicsRectangle` rysuje prostok¹t reprezentowany przez obiekt `MovingRectangle`.
+// Wykorzystuje informacje o pozycji, wymiarach i kolorze prostok¹ta oraz stosuje ustawione wczeœniej transformacje.
 void PrimitiveRenderer::drawPhysicsRectangle(const MovingRectangle& rectangle)
 {
     sf::RectangleShape shape(sf::Vector2f(rectangle.getWidth(), rectangle.getHeight()));
@@ -153,6 +167,8 @@ void PrimitiveRenderer::drawPhysicsRectangle(const MovingRectangle& rectangle)
     resetTransformation();
 }
 
+// Metoda `drawCircle` rysuje ko³o o podanym œrodku, promieniu i kolorze. Tak jak w poprzednich metodach,
+// stosuje wczeœniej ustawione transformacje.
 void PrimitiveRenderer::drawCircle(const sf::Vector2f& center, float radius, const sf::Color& color)
 {
     sf::CircleShape circle(radius);
@@ -182,6 +198,8 @@ void PrimitiveRenderer::drawCircle(const sf::Vector2f& center, float radius, con
     resetTransformation();
 }
 
+// Metoda `drawPhysicsCircle` rysuje ko³o reprezentowane przez obiekt `MovingCircle`.
+// Wykorzystuje informacje o pozycji, promieniu i kolorze ko³a oraz stosuje ustawione wczeœniej transformacje.
 void PrimitiveRenderer::drawPhysicsCircle(const MovingCircle& circle)
 {
     sf::CircleShape shape(circle.getRadius());
@@ -207,6 +225,9 @@ void PrimitiveRenderer::drawPhysicsCircle(const MovingCircle& circle)
     resetTransformation();
 }
 
+// Metoda `drawLineByBresenham` implementuje algorytm Bresenhama do rysowania linii piksel po pikselu.
+// Jest to szczególnie przydatne w sytuacjach, gdy potrzebna jest wiêksza kontrola nad rysowaniem linii,
+// np. w grafice pikselowej.
 void PrimitiveRenderer::drawLineByBresenham(const sf::Vector2f& startPoint, const sf::Vector2f& endPoint, const sf::Color& color , float thickness)
 {
     int x1 = static_cast<int>(startPoint.x);
@@ -242,6 +263,8 @@ void PrimitiveRenderer::drawLineByBresenham(const sf::Vector2f& startPoint, cons
     }
 }
 
+// Metoda `drawPolyline` rysuje liniê ³aman¹ (poliliniê) na podstawie serii punktów.
+// Mo¿na wybraæ, czy linia ma byæ rysowana za pomoc¹ klasycznego rysowania linii, czy algorytmem Bresenhama.
 void PrimitiveRenderer::drawPolyline(const std::vector<Point2D>& points, const sf::Color& color, float thickness, bool useBresenham)
 {
     for (size_t i = 0; i < points.size() - 1; i++)
@@ -256,6 +279,7 @@ void PrimitiveRenderer::drawPolyline(const std::vector<Point2D>& points, const s
     }
 }
 
+// Analogicznie, ta wersja metody `drawPolyline` akceptuje punkty w formacie `sf::Vector2f`.
 void PrimitiveRenderer::drawPolyline(const std::vector<sf::Vector2f>& points, const sf::Color& color, float thickness, bool useBresenham)
 {
     for (size_t i = 0; i < points.size() - 1; i++)
@@ -270,7 +294,9 @@ void PrimitiveRenderer::drawPolyline(const std::vector<sf::Vector2f>& points, co
     }
 }
 
-
+// Metoda `drawClosedPolyline` rysuje zamkniêt¹ liniê ³aman¹ (poliliniê) na podstawie serii punktów Point2D.
+// Linia jest zamkniêta poprzez po³¹czenie ostatniego punktu z pierwszym. Pozwala na wybór miêdzy
+// klasycznym rysowaniem linii a algorytmem Bresenhama.
 void PrimitiveRenderer::drawClosedPolyline(const std::vector<Point2D>& points, const sf::Color& color, float thickness, bool useBresenham)
 {
     drawPolyline(points, color, thickness, useBresenham);
@@ -286,6 +312,8 @@ void PrimitiveRenderer::drawClosedPolyline(const std::vector<Point2D>& points, c
     }
 }
 
+// Metoda `drawCircleAlgorithm` rysuje ko³o, wykorzystuj¹c algorytm rysowania ko³a oparty na równaniu parametrycznym.
+// Ko³o jest rysowane poprzez obliczanie punktów na jego obwodzie i umieszczanie pojedynczych pikseli w tych miejscach.
 void PrimitiveRenderer::drawCircleAlgorithm(int x_center, int y_center, int r, const sf::Color& color)
 {
     const float dTheta = 0.01;
@@ -298,13 +326,16 @@ void PrimitiveRenderer::drawCircleAlgorithm(int x_center, int y_center, int r, c
     }
 }
 
-
+// Metoda `putPixel` rysuje pojedynczy piksel w okreœlonym miejscu. Jest u¿ywana do rysowania bardziej z³o¿onych
+// kszta³tów poprzez umieszczanie wielu pojedynczych pikseli.
 void PrimitiveRenderer::putPixel(int x, int y, const sf::Color& color)
 {
     sf::Vertex point(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)), color);
     window.draw(&point, 1, sf::Points);
 }
 
+// Metoda `drawEllipse` rysuje elipsê na podstawie zadanych parametrów: œrodka, promieni w osi X i Y oraz koloru.
+// Podobnie jak w przypadku ko³a, elipsa jest rysowana poprzez obliczanie i rysowanie pojedynczych pikseli.
 void PrimitiveRenderer::drawEllipse(float x0, float y0, float RX, float RY, const sf::Color& color)
 {
     const float dTheta = 0.001;
@@ -318,12 +349,8 @@ void PrimitiveRenderer::drawEllipse(float x0, float y0, float RX, float RY, cons
     }
 }
 
-void PrimitiveRenderer::drawEllipse(const GameObject& object, float x0, float y0, float RX, float RY, const sf::Color& color)
-{
-    /*TODO*/
-    drawEllipse(x0, y0, RX, RY, color);
-}
-
+// Metoda `drawPolygon` rysuje wielok¹t na podstawie serii punktów Point2D. Wielok¹t jest automatycznie zamkniêty,
+// ³¹cz¹c ostatni punkt z pierwszym, a linie s¹ rysowane miêdzy kolejnymi punktami.
 void PrimitiveRenderer::drawPolygon(const std::vector<Point2D>& points, const sf::Color& color)
 {
     if (points.size() < 3)
@@ -340,6 +367,7 @@ void PrimitiveRenderer::drawPolygon(const std::vector<Point2D>& points, const sf
     drawPolyline(sfPoints, color);
 }
 
+// Metoda `fillRectangle` rysuje wype³niony prostok¹t o okreœlonej pozycji, rozmiarze i kolorze.
 void PrimitiveRenderer::fillRectangle(float x, float y, float width, float height, const sf::Color& color)
 {
     sf::RectangleShape rectangle(sf::Vector2f(width, height));
@@ -348,6 +376,7 @@ void PrimitiveRenderer::fillRectangle(float x, float y, float width, float heigh
     window.draw(rectangle);
 }
 
+// Metoda `fillCircle` rysuje wype³nione ko³o o okreœlonym œrodku, promieniu i kolorze.
 void PrimitiveRenderer::fillCircle(float x_center, float y_center, float radius, const sf::Color& color)
 {
     sf::CircleShape circle(radius);
@@ -356,6 +385,8 @@ void PrimitiveRenderer::fillCircle(float x_center, float y_center, float radius,
     window.draw(circle);
 }
 
+// Metoda `fillPolygon` rysuje wype³niony wielok¹t na podstawie serii punktów Point2D. Wype³nienie odbywa siê
+// poprzez rysowanie spójnej, wewnêtrznej przestrzeni wielok¹ta.
 void PrimitiveRenderer::fillPolygon(const std::vector<Point2D>& points, const sf::Color& color)
 {
     sf::ConvexShape polygon;
@@ -368,6 +399,8 @@ void PrimitiveRenderer::fillPolygon(const std::vector<Point2D>& points, const sf
     window.draw(polygon);
 }
 
+// Metoda `applyTransform` stosuje zdefiniowane transformacje (skala, rotacja) do danego punktu.
+// Umo¿liwia modyfikacjê po³o¿enia punktu zgodnie z aktualnymi ustawieniami transformacji obiektu.
 sf::Vector2f PrimitiveRenderer::applyTransform(const sf::Vector2f& point)
 {
     sf::Vector2f transformed = point;
@@ -381,6 +414,8 @@ sf::Vector2f PrimitiveRenderer::applyTransform(const sf::Vector2f& point)
     return transformed;
 }
 
+// Metoda `resetTransformation` resetuje wszystkie transformacje (skala, rotacja, translacja) do ich wartoœci domyœlnych.
+// Jest to przydatne do przywrócenia stanu domyœlnego przed kolejnymi operacjami rysowania.
 void PrimitiveRenderer::resetTransformation()
 {
     scale = sf::Vector2f(1.0f, 1.0f);
@@ -388,31 +423,43 @@ void PrimitiveRenderer::resetTransformation()
     translation = sf::Vector2f(0.0f, 0.0f);
 }
 
+// Metoda `enableScaleTransform` w³¹cza stosowanie transformacji skali dla kolejnych operacji rysowania.
+// Pozwala to na skalowanie rysowanych obiektów.
 void PrimitiveRenderer::enableScaleTransform()
 {
     useScaleTransform = true;
 }
 
+// Metoda `disableScaleTransform` wy³¹cza stosowanie transformacji skali dla kolejnych operacji rysowania.
+// Dzia³a przeciwnie do metody `enableScaleTransform`, powracaj¹c do rysowania bez skalowania.
 void PrimitiveRenderer::disableScaleTransform()
 {
     useScaleTransform = false;
 }
 
+// Metoda `enableRotationTransform` w³¹cza stosowanie transformacji rotacji dla kolejnych operacji rysowania.
+// Pozwala to na obracanie rysowanych obiektów.
 void PrimitiveRenderer::enableRotationTransform()
 {
     useRotationTransform = true;
 }
 
+// Metoda `disableRotationTransform` wy³¹cza stosowanie transformacji rotacji dla kolejnych operacji rysowania.
+// Dzia³a przeciwnie do metody `enableRotationTransform`, powracaj¹c do rysowania bez obracania.
 void PrimitiveRenderer::disableRotationTransform()
 {
     useRotationTransform = false;
 }
 
+// Metoda `enableTranslationTransform` w³¹cza stosowanie transformacji translacji (przesuniêcia) dla kolejnych operacji rysowania.
+// Pozwala to na przesuwanie rysowanych obiektów.
 void PrimitiveRenderer::enableTranslationTransform()
 {
     useTranslationTransform = true;
 }
 
+// Metoda `disableTranslationTransform` wy³¹cza stosowanie transformacji translacji dla kolejnych operacji rysowania.
+// Dzia³a przeciwnie do metody `enableTranslationTransform`, powracaj¹c do rysowania bez przesuwania.
 void PrimitiveRenderer::disableTranslationTransform()
 {
     useTranslationTransform = false;
